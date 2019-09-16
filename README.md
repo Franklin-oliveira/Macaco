@@ -12,12 +12,12 @@ Repositório do trabalho final da disciplina de Estruturas de Dados e Algoritmos
 
 ## Arquivos
 
-compile_pyboost.sh - para compilar
-dataframe.cpp - Implementa a classe DataFrame em C++. Nesse arquivo são definidas as funções para acrescentar colunas, deletar e acessar
+* compile_pyboost.sh - para compilar
+* dataframe.cpp - Implementa a classe DataFrame em C++. Nesse arquivo são definidas as funções para acrescentar colunas, deletar e acessar
 as informações em cada coluna. Isso é feito para três tipos de variáveis: int, double e string. O boost é integrado nesse código, para que
-haja a comunicação com o Python.
-dataframe.o, dataframe.so - dataframe compilado, pronto para ser acessado pelo Python.
-demo.ipynb - implementação das funções gráficas
+haja a comunicação com o Python. Também é definida a função plot e outros atributos.
+* dataframe.o, dataframe.so - dataframe compilado, pronto para ser acessado pelo Python.
+* demo.ipynb - demonstração
 
 ## Projeto: MACACO
 
