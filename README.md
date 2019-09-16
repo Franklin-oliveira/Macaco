@@ -40,9 +40,17 @@ Dependencias:
 ## Funcionalidades
 
 ### macaco.DataFrame
-class macaco.DataFrame(Dados=None)
+**class macaco.DataFrame(Dados=None)**
 Estrutura de dados bidimensional.
-    * Dados: dicionário - key contém o nome da coluna e a lista associada aos valores da coluna.
+|Parameters|-|
+------
+|Dados| dicionário - key contém o nome da coluna e a lista associada aos valores da coluna|
+-----
+
+    
+    
+    
+    
     
     Exemplo:
     from dataframe import *
