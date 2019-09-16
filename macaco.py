@@ -5,7 +5,7 @@ class DataFrame():
     """docstring for DataFrame"""
     def __init__(self,dados=None):
         self.df = dataframe()
-        self.colunas = {}
+        self.columns = {}
         self.shape = [0,0]
         if dados != None:
             for coluna in dados:
@@ -17,70 +17,70 @@ class DataFrame():
     
         if all(isinstance(x, int) for x in values):
             if self.shape == [0,0]:
-                self.df.InsertIntColumn(values, col_name)
-                self.colunas[col_name] ='int'
+                self.df.addIntColumn(values, col_name)
+                self.columns[col_name] ='int'
                 self.shape[0] = len(values)
                 self.shape[1] += 1
             elif self.shape[0] != len(values):
                 raise Exception("Coluna com tamanhos diferentes.")
             else:
-                self.df.InsertIntColumn(values, col_name)
-                self.colunas[col_name] ='int'
+                self.df.addIntColumn(values, col_name)
+                self.columns[col_name] ='int'
                 self.shape[1] += 1
 
         elif all(isinstance(x, (float,int)) for x in values):
             if self.shape == [0,0]:
-                self.df.InsertDoubleColumn(values, col_name)
-                self.colunas[col_name] ='double'
+                self.df.addDoubleColumn(values, col_name)
+                self.columns[col_name] ='double'
                 self.shape[0] = len(values)
                 self.shape[1] += 1
             elif self.shape[0] != len(values):
                 raise Exception("Coluna com tamanhos diferentes.")
             else:
-                self.df.InsertDoubleColumn(values, col_name)
-                self.colunas[col_name] ='double'
+                self.df.addDoubleColumn(values, col_name)
+                self.columns[col_name] ='double'
                 self.shape[1] += 1
 
         else:
             if not all(isinstance(x, str) for x in values):
-                valores = [str(i) for i in list(values)]
+                values = [str(i) for i in list(values)]
             if self.shape == [0,0]:
-                self.df.InsertStringColumn(values,col_name)
-                self.colunas[col_name] ='string'
+                self.df.addStringColumn(values,col_name)
+                self.columns[col_name] ='string'
                 self.shape[0] = len(values)
                 self.shape[1] += 1
             elif self.shape[0] != len(values):
                 raise Exception("Coluna com tamanhos diferentes.")
             else:
-                self.df.InsertStringColumn(values,col_name)
-                self.colunas[col_name] ='string'
+                self.df.addStringColumn(values,col_name)
+                self.columns[col_name] ='string'
                 self.shape[1] += 1
                 
 
-    def PopColumn(self,column_name):
+    def popColumn(self,column_name):
         '''
         Remove coluna do dataframe.
         '''
-        if self.colunas[column_name] == 'int':
-            self.df.PopIntColumn([], column_name)
-            self.colunas.pop(column_name)
+        if self.columns[column_name] == 'int':
+            self.df.popIntColumn([], column_name)
+            self.columns.pop(column_name)
 
-        elif self.colunas[column_name] == 'double':
-            self.df.PopDoubleColumn([], column_name)
-            self.colunas.pop(column_name)
+        elif self.columns[column_name] == 'double':
+            self.df.popDoubleColumn([], column_name)
+            self.columns.pop(column_name)
 
-        elif self.colunas[column_name] == 'string':
-            self.df.PopStringColumn([], column_name)
-            self.colunas.pop(column_name)
+        elif self.columns[column_name] == 'string':
+            self.df.popStringColumn([], column_name)
+            self.columns.pop(column_name)
 
             
-    def GetColumn(self,col_name):
-        if self.colunas[col_name] == 'int':
-            return self.df.GetIntColumn(col_name)
-        elif self.colunas[col_name] == 'double':
-            return self.df.GetDoubleColumn(col_name)
-        elif self.colunas[col_name] == 'string':
-            return self.df.GetStringColumn(col_name)
+    def getColumn(self,col_name):
+        if self.columns[col_name] == 'int':
+            return self.df.getIntColumn(col_name)
+        elif self.columns[col_name] == 'double':
+            return self.df.getDoubleColumn(col_name)
+        elif self.columns[col_name] == 'string':
+            return self.df.getStringColumn(col_name)
         
 
     def info(self):
@@ -89,39 +89,39 @@ class DataFrame():
         print('Total of lines: {}'.format(self.shape[0]))
         print('Data ({} columns):'.format(self.shape[1]))
         
-        cols = list(self.colunas.keys())
-        dtypes = list(self.colunas.values())
+        cols = list(self.columns.keys())
+        dtypes = list(self.columns.values())
         for i in range(len(cols)):
             if dtypes[i] == 'int':
-                vector = self.df.GetIntColumn(cols[i])
+                vector = self.df.getIntColumn(cols[i])
             elif dtypes[i] == 'double':
-                vector = self.df.GetDoubleColumn(cols[i])
+                vector = self.df.getDoubleColumn(cols[i])
             elif dtypes[i] == 'string':
-                vector = self.df.GetStringColumn(cols[i])
+                vector = self.df.getStringColumn(cols[i])
 
             print(cols[i], ' ', sum([v != None for v in vector]), 'non-null entries ' ,dtypes[i])
     
     
-     def head(self, n_lines=5):
+    def head(self, n_lines=5):
         '''
         Exibe as primeiras linhas do dataframe. 
         
         A primeira lista são as colunas. 
         Depois, cada lista corresponde a uma linha.
         '''
-        cols = list(self.colunas.keys())
-        dtypes = list(self.colunas.values())
+        cols = list(self.columns.keys())
+        dtypes = list(self.columns.values())
         
         d = {}
         for i in range(len(cols)):
             if dtypes[i] == 'int':
-                vector = self.df.GetIntColumn(cols[i])[:n_lines]
+                vector = self.df.getIntColumn(cols[i])[:n_lines]
                 d[cols[i]] = vector
             elif dtypes[i] == 'double':
-                vector = self.df.GetDoubleColumn(cols[i])[:n_lines]
+                vector = self.df.getDoubleColumn(cols[i])[:n_lines]
                 d[cols[i]] = vector
             elif dtypes[i] == 'string':
-                vector = self.df.GetStringColumn(cols[i])[:n_lines]
+                vector = self.df.getStringColumn(cols[i])[:n_lines]
                 d[cols[i]] = vector
         
         print(cols)
@@ -139,19 +139,19 @@ class DataFrame():
         A primeira lista são as colunas. 
         Depois, cada lista corresponde a uma linha.
         '''
-        cols = list(self.colunas.keys())
-        dtypes = list(self.colunas.values())
+        cols = list(self.columns.keys())
+        dtypes = list(self.columns.values())
         
         d = {}
         for i in range(len(cols)):
             if dtypes[i] == 'int':
-                vector = self.df.GetIntColumn(cols[i])[-n_lines:]
+                vector = self.df.getIntColumn(cols[i])[-n_lines:]
                 d[cols[i]] = vector
             elif dtypes[i] == 'double':
-                vector = self.df.GetDoubleColumn(cols[i])[-n_lines:]
+                vector = self.df.getDoubleColumn(cols[i])[-n_lines:]
                 d[cols[i]] = vector
             elif dtypes[i] == 'string':
-                vector = self.df.GetStringColumn(cols[i])[-n_lines:]
+                vector = self.df.getStringColumn(cols[i])[-n_lines:]
                 d[cols[i]] = vector
         
         print(cols)
@@ -159,7 +159,6 @@ class DataFrame():
             line = []
             for col in cols:
                 line.append(d[col][i])    
-            print(line)
-
-
+            print(line)  
+            
             

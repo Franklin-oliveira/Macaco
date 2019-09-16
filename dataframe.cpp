@@ -31,24 +31,24 @@ public:
     std::string check = "nothing";
 
     // funções para inserir colunas (atributos do dataframe)
-    void InsertIntColumn(boost::python::list& l, std::string column_name);
-    void InsertDoubleColumn(boost::python::list& l, std::string column_name);
-    void InsertStringColumn(boost::python::list& l, std::string column_name);
+    void addIntColumn(boost::python::list& l, std::string column_name);
+    void addDoubleColumn(boost::python::list& l, std::string column_name);
+    void addStringColumn(boost::python::list& l, std::string column_name);
 
     // funções para remover colunas (pop ou remove)
-    void PopIntColumn(boost::python::list& l, std::string column_name);
-    void PopDoubleColumn(boost::python::list& l, std::string column_name);
-    void PopStringColumn(boost::python::list& l, std::string column_name);
+    void popIntColumn(boost::python::list& l, std::string column_name);
+    void popDoubleColumn(boost::python::list& l, std::string column_name);
+    void popStringColumn(boost::python::list& l, std::string column_name);
 
     // funções para acessar colunas
-    boost::python::list GetIntColumn(std::string column_name);
-    boost::python::list GetDoubleColumn(std::string column_name);
-    boost::python::list GetStringColumn(std::string column_name);
+    boost::python::list getIntColumn(std::string column_name);
+    boost::python::list getDoubleColumn(std::string column_name);
+    boost::python::list getStringColumn(std::string column_name);
 };
 
 
 // definindo funções para inserir coluna 
-void DataFrame::InsertIntColumn(boost::python::list& l, std::string column_name){
+void DataFrame::addIntColumn(boost::python::list& l, std::string column_name){
     std::vector<int> w;
     int token;
     for (int i = 0; i < len(l) ; i++){
@@ -57,7 +57,7 @@ void DataFrame::InsertIntColumn(boost::python::list& l, std::string column_name)
     }
     intColumn[column_name] = w;
 }
-void DataFrame::InsertDoubleColumn(boost::python::list& l, std::string column_name){
+void DataFrame::addDoubleColumn(boost::python::list& l, std::string column_name){
     std::vector<double> w;
     double token;
     for (int i = 0; i < len(l) ; i++){
@@ -66,7 +66,7 @@ void DataFrame::InsertDoubleColumn(boost::python::list& l, std::string column_na
     }
     doubleColumn[column_name] = w;
 }
-void DataFrame::InsertStringColumn(boost::python::list& l, std::string column_name){
+void DataFrame::addStringColumn(boost::python::list& l, std::string column_name){
     std::vector<std::string> w;
     std::string token;
     for (int i = 0; i < len(l) ; i++){
@@ -77,18 +77,18 @@ void DataFrame::InsertStringColumn(boost::python::list& l, std::string column_na
 }
 
 // Funções para remover colunas
-void DataFrame::PopIntColumn(boost::python::list& l, std::string column_name){
+void DataFrame::popIntColumn(boost::python::list& l, std::string column_name){
     intColumn.erase(column_name);
 }
-void DataFrame::PopDoubleColumn(boost::python::list& l, std::string column_name){
+void DataFrame::popDoubleColumn(boost::python::list& l, std::string column_name){
     doubleColumn.erase(column_name);
 }
-void DataFrame::PopStringColumn(boost::python::list& l, std::string column_name){
+void DataFrame::popStringColumn(boost::python::list& l, std::string column_name){
     stringColumn.erase(column_name);
 }
 
 // funções para acessar colunas
-boost::python::list DataFrame::GetIntColumn(std::string column_name){
+boost::python::list DataFrame::getIntColumn(std::string column_name){
     boost::python::list l;
     for (auto i: intColumn[column_name])
     {
@@ -96,7 +96,7 @@ boost::python::list DataFrame::GetIntColumn(std::string column_name){
     }
     return l;
 }
-boost::python::list DataFrame::GetDoubleColumn(std::string column_name){
+boost::python::list DataFrame::getDoubleColumn(std::string column_name){
     boost::python::list l;
     for (auto i: doubleColumn[column_name])
     {
@@ -104,7 +104,7 @@ boost::python::list DataFrame::GetDoubleColumn(std::string column_name){
     }
     return l;
 }
-boost::python::list DataFrame::GetStringColumn(std::string column_name){
+boost::python::list DataFrame::getStringColumn(std::string column_name){
     boost::python::list l;
     for (auto i: stringColumn[column_name])
     {
@@ -120,15 +120,15 @@ using namespace boost::python;
 BOOST_PYTHON_MODULE(dataframe){
     class_<DataFrame>("dataframe",init<>())
     .def_readwrite("check", & DataFrame::check)
-    .def("InsertIntColumn", & DataFrame::InsertIntColumn)
-    .def("InsertDoubleColumn", & DataFrame::InsertDoubleColumn)
-    .def("InsertStringColumn", & DataFrame::InsertStringColumn)
-    .def("PopIntColumn", & DataFrame::PopIntColumn)
-    .def("PopDoubleColumn", & DataFrame::PopIntColumn)
-    .def("PopStringColumn", & DataFrame::PopIntColumn)
-    .def("GetIntColumn", & DataFrame::GetIntColumn)
-    .def("GetDoubleColumn", & DataFrame::GetDoubleColumn)
-    .def("GetStringColumn", & DataFrame::GetStringColumn)
+    .def("addIntColumn", & DataFrame::addIntColumn)
+    .def("addDoubleColumn", & DataFrame::addDoubleColumn)
+    .def("addStringColumn", & DataFrame::addStringColumn)
+    .def("popIntColumn", & DataFrame::popIntColumn)
+    .def("popDoubleColumn", & DataFrame::popIntColumn)
+    .def("popStringColumn", & DataFrame::popIntColumn)
+    .def("getIntColumn", & DataFrame::getIntColumn)
+    .def("getDoubleColumn", & DataFrame::getDoubleColumn)
+    .def("getStringColumn", & DataFrame::getStringColumn)
     .def_readwrite("intColumn", & DataFrame::intColumn)
     ;
 }
