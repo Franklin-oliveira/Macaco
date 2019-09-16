@@ -45,7 +45,14 @@ Estrutura de dados bidimensional.
 
 |Parameters  | Description|
 |------------|:-----------------------------------------------------------------------------------:|
-|Dados       |  dicionario: a key contém o nome da coluna e a lista associada aos valores da coluna|
+|Dados       |  dicionario{coluna:[valores]}|
+
+   
+    Exemplo:
+    from dataframe import *
+    
+    df=DataFrame({'Col1': ['a','b','c','d'], 'Col2': [1,2,3,4], 'Col3':[3,3,4,1]})
+    
 
 |Methods|Description|
 |------------|:-----------------------------------------------------------------------------------:|
@@ -61,10 +68,6 @@ Estrutura de dados bidimensional.
 |info(self)|Retorna um sumário conciso do DataFrame(colunas,tipos,quantidade de linhas)|
 
     
-    
-    Exemplo:
-    from dataframe import *
-    
-    df=DataFrame({'Col1': ['a','b','c','d'], 'Col2': [1,2,3,4], 'Col3':[3,3,4,1]})
+ 
     
 
