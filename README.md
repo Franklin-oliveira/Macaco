@@ -42,12 +42,10 @@ Dependencias:
 ### macaco.DataFrame
 **class macaco.DataFrame(Dados=None)**
 Estrutura de dados bidimensional.
-|Parameters|-|
-------
-|Dados| dicionário - key contém o nome da coluna e a lista associada aos valores da coluna|
------
 
-    
+"Parameters                         |  \n",
+":-------------------------:|:-------------------------:\n",
+"Dados |  dicionario: a key contém o nome da coluna e a lista associada aos valores da coluna"
     
     
     
