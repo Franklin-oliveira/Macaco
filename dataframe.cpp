@@ -23,6 +23,7 @@ struct column{
 // criando a classe dataframe
 class DataFrame{
 public:
+    // COLUNAS
     // definindo colunas do dataframe (uma linha para cada tipo: string, int e float)
     std::map<std::string, std::vector<int>> intColumn;
     std::map<std::string, std::vector<double>> doubleColumn;
@@ -44,6 +45,9 @@ public:
     boost::python::list getIntColumn(std::string column_name);
     boost::python::list getDoubleColumn(std::string column_name);
     boost::python::list getStringColumn(std::string column_name);
+
+    // LINHAS
+    // funções para acessar linhas
 };
 
 

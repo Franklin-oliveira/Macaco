@@ -1,5 +1,5 @@
 from dataframe import *
-
+import matplotlib.pyplot as plt
 
 class DataFrame():
     """docstring for DataFrame"""
@@ -162,3 +162,121 @@ class DataFrame():
             print(line)  
             
             
+    def plot(self, y = None, x = None, kind='line', remove_frames='No', **kwargs):
+            '''
+            Faz um plot com as colunas x e y.
+
+            Argumentos: 
+                - y: nome da coluna para o eixo y
+                - x: nome da coluna para o eixo x
+                - kind: tipo de gráfico 
+                    'line': linha (default)
+                    'bar': barras verticais
+                    'barh': barras horizontais
+                    'hist': histograma
+                    'kde': Kernel Density Estimation plot
+                    'density': mesmo que o kde
+                    'scatter': dispersão
+                    'area': área
+                    'pie': pizza
+
+            Para mais configurações, visite a documentação do matplotlib.pyplot
+            '''
+
+            # preparando os dados
+            if x == None:
+                x = list(range(self.shape[0]))
+
+            if self.columns[y] == 'int':
+                y_data = self.df.getIntColumn(y)
+            elif self.columns[y] == 'double':
+                y_data = self.df.getDoubleColumn(y)
+
+            # se é string, levanta um erro
+            elif self.columns[y] == 'string':
+                raise ValueError('Cannot plot string vector')
+
+            # permite passar um eixo para o plot
+            if kwargs.get('ax') == None:
+                fig, ax = plt.subplots(figsize=kwargs.get('figsize'))
+            else:
+                ax = ax
+
+            #plt.figure(figsize=kwargs.get('figsize'), num=kwargs.get('num'),  dpi=kwargs.get('dpi'),
+            #           facecolor=kwargs.get('facecolor'), edgecolor=kwargs.get('edgecolor'))
+
+            # gráfico de linha (padrão)
+            if kind == 'line':
+                # ajustando argumentos padrão
+                if kwargs.get('scalex') == None:
+                    scalex = True
+                else:
+                    scalex = kwargs.get('scalex')
+
+                if kwargs.get('scaley') == None:
+                    scaley = True
+                else:
+                    scaley = kwargs.get('scaley')
+
+                ax.plot(y_data, scalex= scalex, scaley = scaley, 
+                         color=kwargs.get('color'))
+
+            # histograma
+            if kind == 'hist':
+                # tratando argumentos padrão
+                if kwargs.get('histtype') == None:
+                    histtype = 'bar'
+                else:
+                    histtype = kwargs.get('histtype')
+
+                if kwargs.get('align') == None:
+                    align = 'mid'
+                else:
+                    align = kwargs.get('align')
+
+                if kwargs.get('orientation') == None:
+                    orientation = 'vertical'
+                else:
+                    orientation = kwargs.get('orientation')
+
+                ax.hist(y_data, bins = kwargs.get('bins'), color=kwargs.get('color'), 
+                         range=kwargs.get('range'), density=kwargs.get('density'),
+                         weights=kwargs.get('weights'), cumulative=kwargs.get('cumulative'),
+                         bottom=kwargs.get('bottom'), rwidth=kwargs.get('rwidth'), 
+                         log=kwargs.get('log'), label=kwargs.get('label'),
+                         stacked=kwargs.get('stacked'), normed=kwargs.get('normed'),
+                         histtype=histtype, align=align, orientation=orientation)
+
+
+
+            ### OBS: implementar os demais tipos de gráficos AQUI!!!
+
+            # ajustando elementos gráficos
+            ax.set_xlabel(kwargs.get('xlabel'))
+            ax.set_ylabel(kwargs.get('ylabel'))
+            plt.title(kwargs.get('title'))
+
+            if kwargs.get('ylim') != None:
+                ax.set_ylim(kwargs.get('ylim'))
+            if kwargs.get('xlim') != None:
+                ax.set_xlim(kwargs.get('xlim'))
+
+            if remove_frames == 'all':
+                ax.spines['top'].set_visible(False)
+                ax.spines['right'].set_visible(False)
+                ax.spines['bottom'].set_visible(False)
+                ax.spines['left'].set_visible(False)
+            if remove_frames == 'left':
+                ax.spines['left'].set_visible(False)
+            if remove_frames == 'right':
+                ax.spines['right'].set_visible(False)
+            if remove_frames == 'bottom':
+                ax.spines['bottom'].set_visible(False)
+            if remove_frames == 'top':
+                ax.spines['top'].set_visible(False)
+
+
+        # def GetLinha(linha)
+        # def GetColuna(coluna)
+        # def GetLoc(linha,coluna)
+        # def Query()
