@@ -15,7 +15,8 @@ Repositório do trabalho final da disciplina de Estruturas de Dados e Algoritmos
 * compile_pyboost.sh - para compilar
 * dataframe.cpp - Implementa a classe DataFrame em C++. Nesse arquivo são definidas as funções para acrescentar colunas, deletar e acessar
 as informações em cada coluna. Isso é feito para três tipos de variáveis: int, double e string. O boost é integrado nesse código, para que
-haja a comunicação com o Python. Também é definida a função plot e outros atributos.
+haja a comunicação com o Python.
+* macaco.py - 
 * dataframe.o, dataframe.so - dataframe compilado, pronto para ser acessado pelo Python.
 * demo.ipynb - demonstração
 
@@ -23,7 +24,7 @@ haja a comunicação com o Python. Também é definida a função plot e outros 
 
 ### Descrição
 
-O dataframe é uma forma utilizada para otimizar a análise e a manipulação de dados numéricos (ou minimamente estruturados)  em tabelas. A idéia é ter uma estrutura bidimensional, onde uma das dimensões é representada pelas colunas e a outra é representada pelas linhas. Em tese, os dados que estão contidos nas colunas tem o mesmo tipo, enquanto que as linhas podem ser de diferentes tipos. 
+O dataframe é uma estrutura utilizada para otimizar a análise e a manipulação de dados numéricos (ou minimamente estruturados)  em tabelas. A idéia é ter uma estrutura bidimensional, onde uma das dimensões é representada pelas colunas e a outra é representada pelas linhas. Em tese, os dados que estão contidos nas colunas tem o mesmo tipo, enquanto que as linhas podem ser de diferentes tipos. 
 
 O Macaco possui as seguintes funcionalidades:
 * Adicionar e remover colunas dos tipos inteiro, double e string.
@@ -34,8 +35,12 @@ O Macaco possui as seguintes funcionalidades:
 Para instalar:
 pip install macaco
 
-Dependencias:
+Dependencias Python:
 * Matplotlib
+
+Dependencias C++:
+* iostream, vector, string, map, tuple
+* boost: python.hpp, list.hpp, extract.hpp
 
 ## Funcionalidades
 
