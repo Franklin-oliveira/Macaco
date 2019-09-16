@@ -63,9 +63,22 @@ Estrutura de dados bidimensional.
 |tail(self,n_lines=5)|Exibe as últimas linhas do DataFrame|
 |plot(self,y,x,kind,remove_frames,kwargs)|Traça um gráfico com as colunas x e y|
 
+      Exemplo:
+      from dataframe import *
+    
+      df=DataFrame({'Col1': ['a','b','c'], 'Col2': [1,2,3], 'Col3':[3,3,4]})
+      df.addColumn([85,86,87],'Decada Perdida')
+      df.show()
+      
+      ['Col1','Col2','Col3','Decada Perdida']
+      ['a',1,3,85]
+      ['b',2,3,86]
+      ['c',3,4,87]
+
 |Attributes|Description|
 |------------|:-----------------------------------------------------------------------------------:|
 |info(self)|Retorna um sumário conciso do DataFrame(colunas,tipos,quantidade de linhas)|
+|show(self)|Imprime na tela o DataFrame|
 
     
  
