@@ -46,7 +46,8 @@ Estrutura de dados bidimensional.
 |Parameters  | Description|
 |------------|:-----------------------------------------------------------------------------------:|
 |Dados       |  dicionario: a key contém o nome da coluna e a lista associada aos valores da coluna|
-|Methods||
+
+|Methods|Description|
 |------------|:-----------------------------------------------------------------------------------:|
 |addColumn(seld,values,col_name)|Adiciona uma nova coluna|
 |popColumn(self,column_name)|Remove a coluna indicada|
@@ -54,7 +55,8 @@ Estrutura de dados bidimensional.
 |head(self,n_lines=5)|Exibe as primeiras linhas do DataFrame|
 |tail(self,n_lines=5)|Exibe as últimas linhas do DataFrame|
 |plot(self,y,x,kind,remove_frames,kwargs)|Traça um gráfico com as colunas x e y|
-|Attributes||
+
+|Attributes|Description|
 |------------|:-----------------------------------------------------------------------------------:|
 |info(self)|Retorna um sumário conciso do DataFrame(colunas,tipos,quantidade de linhas)|
 
