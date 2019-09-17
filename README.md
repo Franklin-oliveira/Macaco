@@ -116,11 +116,9 @@ Estrutura de dados bidimensional.
 |popColumn(self,column_name)|Remove a coluna indicada|
 |getColumn(self,col_name)|Mostra os valores da coluna indicada|
 |addRow(self, values)|Insere uma nova linha ao dataframe|
-|loc(self,row,column)|Retorna o(s) elemento(s) na(s) linha(s) e coluna(s) indicadas| 
-|info(self)|Exibe uma breve descrição do dataframe|
+|loc(self,row,column)|Retorna o(s) elemento(s) na(s) linha(s) e coluna(s) indicadas|
 |head(self,n_lines=5)|Exibe as primeiras linhas do DataFrame|
 |tail(self,n_lines=5)|Exibe as últimas linhas do DataFrame|
-|show(self)|Exibe todo o DataFrame (não recomendável para DataFrames muito grandes)|
 |plot(self,y,x,kind,remove_frames,kwargs)|Traça um gráfico com as colunas x e y|
 
       Exemplo:
@@ -137,8 +135,11 @@ Estrutura de dados bidimensional.
 
 |Attributes|Description|
 |------------|:-----------------------------------------------------------------------------------:|
-|info(self)|Retorna um sumário conciso do DataFrame(colunas,tipos,quantidade de linhas)|
-|show(self)|Imprime na tela o DataFrame|
+|info(self)|Exibe uma breve descrição do DataFrame(colunas,tipos,quantidade de linhas)|
+|shape|Exibe o número de linhas e colunas do DataFrame|
+|index|Exibe índices das linhas|
+|colIndex|Exibe índices das colunas| 
+|show(self)|Exibe todo o DataFrame (não recomendável para DataFrames muito grandes)|
 
     
  
