@@ -170,7 +170,10 @@ class DataFrame():
 ### ------------------------------------------------------------------------------------------------------- ###
     def info(self):
         print('< macaco.DataFrame >')
-        print('RangeIndex: from {} to {}'.format(min(self.index), max(self.index)))
+        if type(self.index[0]) != str:
+            print('RangeIndex: numeric (from {} to {})'.format(min(self.index), max(self.index)))
+        else:
+            print('RangeIndex: string ({}, ..., {})'.format(self.index[0], self.index[-1]))
         print('Total of lines: {}'.format(self.shape[0]))
         print('Data ({} columns):'.format(self.shape[1]))
         

@@ -1,0 +1,6 @@
+README.md
+setup.py
+macaco.egg-info/PKG-INFO
+macaco.egg-info/SOURCES.txt
+macaco.egg-info/dependency_links.txt
+macaco.egg-info/top_level.txt
