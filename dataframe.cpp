@@ -4,14 +4,15 @@
 #include <map>
 #include <tuple>
 
+//BST
+#include "BST.cpp"
+
 // boost modules
 #include <boost/python.hpp>
 #include <boost/python/list.hpp>
 #include <boost/python/extract.hpp>
 
-// declaring namespace to shorten code
-// using namespace boost::python;
-
+#include "dataframe.h"
 
 
 // criando uma estrutura de dados (coluna do DataFrame)
@@ -19,37 +20,6 @@ struct column{
     char kind;  // tipo de dado na coluna
     void *pcol;  // ponteiro que aponta para a coluna
 };
-
-// criando a classe dataframe
-class DataFrame{
-public:
-    // COLUNAS
-    // definindo colunas do dataframe (uma linha para cada tipo: string, int e float)
-    std::map<std::string, std::vector<int>> intColumn;
-    std::map<std::string, std::vector<double>> doubleColumn;
-    std::map<std::string, std::vector<std::string>> stringColumn; 
-
-    std::string check = "nothing";
-
-    // funções para inserir colunas (atributos do dataframe)
-    void addIntColumn(boost::python::list& l, std::string column_name);
-    void addDoubleColumn(boost::python::list& l, std::string column_name);
-    void addStringColumn(boost::python::list& l, std::string column_name);
-
-    // funções para remover colunas (pop ou remove)
-    void popIntColumn(boost::python::list& l, std::string column_name);
-    void popDoubleColumn(boost::python::list& l, std::string column_name);
-    void popStringColumn(boost::python::list& l, std::string column_name);
-
-    // funções para acessar colunas
-    boost::python::list getIntColumn(std::string column_name);
-    boost::python::list getDoubleColumn(std::string column_name);
-    boost::python::list getStringColumn(std::string column_name);
-
-    // LINHAS
-    // funções para acessar linhas
-};
-
 
 // definindo funções para inserir coluna 
 void DataFrame::addIntColumn(boost::python::list& l, std::string column_name){
@@ -116,9 +86,133 @@ boost::python::list DataFrame::getStringColumn(std::string column_name){
     }
     return l;
 }
+boost::python::list DataFrame::getIntRow(boost::python::list & rows, std::string column_name){
+    int row;
+    boost::python::list result;
+    for (int i = 0; i < len(rows) ; i++){
+        row = boost::python::extract<int>(rows[i]);
+        result.append(intColumn[column_name][row]);
+    }
+    return result;
+}
+
+boost::python::list DataFrame::getDoubleRow(boost::python::list & rows, std::string column_name){
+    int row;
+    boost::python::list result;
+    for (int i = 0; i < len(rows) ; i++){
+        row = boost::python::extract<int>(rows[i]);
+        result.append(doubleColumn[column_name][row]);
+    }
+    return result;
+}
+
+boost::python::list DataFrame::getStringRow(boost::python::list & rows, std::string column_name){
+    int row;
+    boost::python::list result;
+    for (int i = 0; i < len(rows) ; i++){
+        row = boost::python::extract<int>(rows[i]);
+        result.append(stringColumn[column_name][row]);
+    }
+    return result;
+}
+void DataFrame::addIntRow(boost::python::list& l, std::string column_name){
+    for (int i = 0; i < len(l) ; i++){
+           intColumn[column_name].push_back(boost::python::extract<int>(l[i]));
+       }
+}
+void DataFrame::addDoubleRow(boost::python::list& l, std::string column_name){
+    for (int i = 0; i < len(l) ; i++){
+           doubleColumn[column_name].push_back(boost::python::extract<double>(l[i]));
+       }
+}
+void DataFrame::addStringRow(boost::python::list& l, std::string column_name){
+    for (int i = 0; i < len(l) ; i++){
+           stringColumn[column_name].push_back(boost::python::extract<std::string>(l[i]));
+       }
+}
+
+boost::python::list DataFrame::getIntNode(boost::python::list & nodes, std::string column_name){
+    std::vector<int> out;
+    std::set<int> s;
+    int w;
+    boost::python::list result;
+
+    for (int i = 0; i < len(nodes) ; i++){
+        w = boost::python::extract<int>(nodes[i]);
+        s = intTrees[column_name].getRows(w);
+        out.insert(out.end(), s.begin(), s.end());
+    }
+    for (int i = 0; i < out.size() ; i++)
+    {
+        result.append(out[i]);
+    }
+    return result;
+}
+
+boost::python::list DataFrame::getDoubleNode(boost::python::list & nodes, std::string column_name){
+    std::vector<int> out;
+    std::set<int> s;
+    double w;
+    boost::python::list result;
+
+    for (int i = 0; i < len(nodes) ; i++){
+        w = boost::python::extract<double>(nodes[i]);
+        s = doubleTrees[column_name].getRows(w);
+        out.insert(out.end(), s.begin(), s.end());
+    }
+    for (int i = 0; i < out.size() ; i++)
+    {
+        result.append(out[i]);
+    }
+    return result;
+}
+
+boost::python::list DataFrame::getStringNode(boost::python::list & nodes, std::string column_name){
+    std::vector<int> out;
+    std::set<int> s;
+    std::string w;
+    boost::python::list result;
+
+    for (int i = 0; i < len(nodes) ; i++){
+        w = boost::python::extract<std::string>(nodes[i]);
+        s = stringTrees[column_name].getRows(w);
+        out.insert(out.end(), s.begin(), s.end());
+    }
+    for (int i = 0; i < out.size() ; i++)
+    {
+        result.append(out[i]);
+    }
+    return result;
+}
 
 
+void DataFrame::indexIntCol(boost::python::list & l,std::string column_name){
+    BST<int> Tree;
+    for (int i = 0; i < intColumn[column_name].size(); ++i)
+    {
+        Tree.insertRowNode(intColumn[column_name][i],i);
+    }
+    intTrees[column_name] = Tree;
+}
+void DataFrame::indexDoubleCol(boost::python::list & l,std::string column_name){
+    BST<double> Tree;
+    for (int i = 0; i < doubleColumn[column_name].size(); ++i)
+    {
+        Tree.insertRowNode(doubleColumn[column_name][i],i);
+    }
+    doubleTrees[column_name] = Tree;
+}
+void DataFrame::indexStringCol(boost::python::list & l,std::string column_name){
+    BST<std::string> Tree;
+    for (int i = 0; i < stringColumn[column_name].size(); ++i)
+    {
+        Tree.insertRowNode(stringColumn[column_name][i],i);
+    }
+    stringTrees[column_name] = Tree;
+}
 
+
+// Exportando funções para o Python
 using namespace boost::python;
 
 BOOST_PYTHON_MODULE(dataframe){
@@ -133,6 +227,18 @@ BOOST_PYTHON_MODULE(dataframe){
     .def("getIntColumn", & DataFrame::getIntColumn)
     .def("getDoubleColumn", & DataFrame::getDoubleColumn)
     .def("getStringColumn", & DataFrame::getStringColumn)
+    .def("addIntRow", & DataFrame::addIntRow)
+    .def("addDoubleRow", & DataFrame::addDoubleRow)
+    .def("addStringRow", & DataFrame::addStringRow)
+    .def("getIntRow", & DataFrame::getIntRow)
+    .def("getDoubleRow", & DataFrame::getDoubleRow)
+    .def("getStringRow", & DataFrame::getStringRow)
+    .def("getStringNode", & DataFrame::getIntNode)
+    .def("getStringNode", & DataFrame::getDoubleNode)
+    .def("getStringNode", & DataFrame::getStringNode)
+    .def("indexIntCol", & DataFrame::indexIntCol)
+    .def("indexDoubleCol", & DataFrame::indexDoubleCol)
+    .def("indexStringCol", & DataFrame::indexStringCol)
     .def_readwrite("intColumn", & DataFrame::intColumn)
     ;
 }

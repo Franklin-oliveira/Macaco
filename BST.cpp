@@ -26,7 +26,6 @@ struct Node {
 template<typename Tc>
 class BST {
 
-
 protected:
     Node<Tc> *pRoot;
 
@@ -35,30 +34,29 @@ public:
 
     BST():pRoot(nullptr) {}
 
-    bool find_node(Tc x) {
+    bool findNode(Tc x) {
         Node<Tc> **p;
         return find(x, p);
     }
 
-    std::set<int> get_node_rows(Tc x) {
+    std::set<int> getRows(Tc x) {
         Node<Tc> **p;
         find(x, p);
         return (*p)->rows;
     }
 
-    void insert_node_with_row(Tc x, int row) {
+    void insertNode(Tc x) {
+        Node<Tc> **p;
+        if (!find(x, p)) {
+            *p = new Node<Tc>(x);
+        }
+    }
+    void insertRowNode(Tc x, int row) {
         Node<Tc> **p;
         if (!find(x, p)) {
             *p = new Node<Tc>(x);
         }
         (*p)->rows.insert(row);
-    }
-
-    void insert_node(Tc x) {
-        Node<Tc> **p;
-        if (!find(x, p)) {
-            *p = new Node<Tc>(x);
-        }
     }
     void remove(Tc x) {
         Node<Tc> **p;
